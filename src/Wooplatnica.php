@@ -33,6 +33,7 @@ class Wooplatnica
         if ($this->options['enabled'] === 'yes') {
             add_action("woocommerce_thankyou_{$this->domain}", array($this, 'thankyou_page'));
             add_action('woocommerce_email_after_order_table', array($this, 'email_instructions'), 10, 3);
+	    // add to my account page
             add_action( 'woocommerce_view_order', array($this, 'view_order_instructions'), 10, 3);
         }
 
@@ -280,7 +281,7 @@ EOS;
      * Output for the My account -> View order page.
      */
     public function view_order_instructions($order_id) {
-		// Get an instance of the WC_Order object
+	// Get an instance of the WC_Order object
         $order = wc_get_order( $order_id );
 		
 		if( $order->get_payment_method() === 'wooplatnica-croatia' && $order->has_status('on-hold')){
